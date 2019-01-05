@@ -10,14 +10,21 @@ class BaseConnection():
         self._password = password
         self._conn = None   #placeholder for connection cache
 
-    def connect(self):
+    def connect(self, verbose=True):
         try:
+            if verbose:
+                print("Trying to connect to {}:{}".format(self._device_ip, self._port), end=' ')
             if(self._conn == None):
                 self._conn = ConnectHandler(device_type=self._device_type, ip=self._device_ip, port=self._port, username=self._username, password=self._password)
+            if verbose:
+                print("Succeeded")
             return self._conn
         except Exception as e:
+            if verbose:
+                print("Failed")
             print(str(e))
             return None
+        return None
 
     def check_connection(self):
         return self.connect() is not None

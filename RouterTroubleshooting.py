@@ -14,7 +14,7 @@ class RouterTroubleshooting:
         :param neighbor_ip: IP of neighbor which BGP flapped
         :return: prints the individual status check
         """
-        print("Checking if any BGP neighbor is down: \t", end='')
+        print("Checking if any BGP neighbor is down: \t", end=' ')
         lst = self._router_connection.bgp.is_neighbour_down()
         if not lst:
             print("Pass. No neighbour is down")
@@ -37,7 +37,7 @@ class RouterTroubleshooting:
         import time
         print("Polling every {} seconds".format(interval))
         while True:
-            print(".", end="")
+            print(".", end='', flush=True)
             time.sleep(interval)
 
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     # print("\n---------------------------------")
     # print(router1.get_interfaces(only_drop=False))
     rca = RouterTroubleshooting(router1)
-    rca.get_bgp_down_rca("2.2.2.2")
+    # rca.get_bgp_down_rca("2.2.2.2")
     rca.poll()
 
     print("Time taken: ", format(datetime.now() - start))
