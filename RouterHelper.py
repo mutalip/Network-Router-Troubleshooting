@@ -147,8 +147,9 @@ class RouterConnection(BaseConnection):
     def get_log(self):
         self._conn.enable()
         # self._conn.config_mode()
-        self.send_command("show logging")
+        op = self.send_command("show logging")
         self.reset_prompt()
+        return op
 
 
 class RouterBGP():

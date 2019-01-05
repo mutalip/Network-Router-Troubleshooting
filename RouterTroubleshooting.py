@@ -33,12 +33,22 @@ class RouterTroubleshooting:
         print("{}  --top--{}".format(self._router_connection.get_cpu_utilization(), self._router_connection.get_cpu_utilization_processes()))
         return ""
 
-    def poll(self, seconds=-1, interval=1):
+    def poll(self, neighbor_ip, seconds=-1, interval=1):
         import time
         print("Polling every {} seconds".format(interval))
+        sec = 0
         while True:
-            print(".", end='', flush=True)
+            # print(".", end='', flush=True)
+            log = self._router_connection.get_log()
+            print("-------------------------------------------------------------------")
+            self.get_bgp_down_rca(neighbor_ip)
+            print("-------log---------------------------------------------------------")
+            print(log)
+
             time.sleep(interval)
+            sec += 1
+            if seconds != -1 and sec > sec:
+                break
 
 
 # -------------------------------------------------------------------------------------------------------------
@@ -69,6 +79,6 @@ if __name__ == "__main__":
     # print(router1.get_interfaces(only_drop=False))
     rca = RouterTroubleshooting(router1)
     # rca.get_bgp_down_rca("2.2.2.2")
-    rca.poll()
+    rca.poll("2.2.2.2")
 
     print("Time taken: ", format(datetime.now() - start))
